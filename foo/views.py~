@@ -1,0 +1,10 @@
+from pyramid.view import view_config
+
+
+@view_config(route_name='home', renderer='templates/mytemplate.pt')
+def my_view(request):
+    return {'project': 'Foo'}
+    
+@view_config(route_name='hello')
+def my_fun(request):
+    return Response('Hello %(name)s' % request.matchdict)

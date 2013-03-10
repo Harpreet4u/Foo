@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" xmlns:tal="http://xml.zope.org/namespaces/tal">
+<head>
+  <title>Main Page</title>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+  <meta name="keywords" content="python web application" />
+  <meta name="description" content="pyramid web application" />
+  <link rel="shortcut icon" href="${request.static_url('foo:static/favicon.ico')}" />
+  <link rel="stylesheet" href="${request.static_url('foo:static/pylons.css')}" type="text/css" media="screen" charset="utf-8" />
+  <link rel="stylesheet" href="http://static.pylonsproject.org/fonts/nobile/stylesheet.css" media="screen" />
+  <link rel="stylesheet" href="http://static.pylonsproject.org/fonts/neuton/stylesheet.css" media="screen" />
+  <!--[if lte IE 6]>
+  <link rel="stylesheet" href="${request.static_url('foo:static/ie6.css')}" type="text/css" media="screen" charset="utf-8" />
+  <![endif]-->
+	<script src="http://www.google.com/jsapi?key=AIzaSyDsCWGIMZHund2IP1mrzR5Kvt7vorN94nE"></script>
+    <script type="text/javascript">
+
+    function loadme() {
+
+     // e.preventDefault();
+      return newPicker();
+    }
+     
+      function newPicker(){
+      // Use the Google Loader script to load the google.picker script.
+    //  google.setOnLoadCallback(createPicker);
+      google.load('picker', '1', {"callback" : createPicker});
+
+    }
+    // Create and render a Picker object for searching images.
+    function createPicker() {
+      var picker = new google.picker.PickerBuilder().addView(google.picker.ViewId.DOCUMENTS).setCallback(pickerCallback).build();
+
+       picker.setVisible(true);
+    }
+
+    // A simple callback implementation.
+    function pickerCallback(data) {
+
+    //  console.log("ebbbbbbdxc");
+     // document.getElementById('result').innerHTML = "hi";
+      if (data.action == google.picker.Action.PICKED) {
+        var fileId = data.docs[0].id;
+
+	document.getElementById("fileID").value=fileId;
+//	console.log("hell");
+	document.getElementById("myform").submit();
+     //   alert('The user selected: ' + fileId);
+
+      }
+    }
+    </script>
+
+</head>
+<body>
+        <p>
+          Welcome! <span class="app-name">${name}</span><br/>
+	  
+	  <br/>
+	  <br/>
+	  <form id="myform" action="/" method="post" >
+	  <fieldset>
+	    <legend>Google Picker:</legend>
+	  <a style="decoration:none" href="javascript: loadme()" >Load picker</a>
+	  <input type="hidden" name="fileID" id="fileID">
+	  </fieldset>
+	  </form>
+	  <br/>
+	  <br/>
+
+	  <p>Authorization Code/document plain text : ${code} </p>
+	</p>
+ 
+</body>
+</html>
