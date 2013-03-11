@@ -19,7 +19,9 @@ from oauth2client.client import FlowExchangeError
 ALL_SCOPES = ('https://www.googleapis.com/auth/drive.file '
               'https://www.googleapis.com/auth/userinfo.email '
               'https://www.googleapis.com/auth/userinfo.profile '
-              'https://www.googleapis.com/auth/drive.install')
+              'https://www.googleapis.com/auth/drive.install '
+              'https://www.googleapis.com/auth/drive.metadata.readonly '
+              'https://www.googleapis.com/auth/drive.readonly')
 
 
 
@@ -254,16 +256,16 @@ def print_file(service, file_id):
 		print download_url
 		#download_url = download_url.encode('ascii', 'ignore')
 		if download_url:
-			#resp, content = service._http.request(download_url)
-			content = urllib2.urlopen(download_url).read()
-			return content
+			resp, content = service._http.request(download_url)
+			#content = urllib2.urlopen(download_url).read()
+			#return content
 			
-			#if resp.status == 200:
-				#print 'Status: %s' % resp
-				#return content
-			#else:
-				#print 'An error occurred: %s' % resp
-				#return None
+			if resp.status == 200:
+				print 'Status: %s' % resp
+				return content
+			else:
+				print 'An error occurred: %s' % resp
+				return None
 		else:
 			# The file doesn't have any content stored on Drive.
 			return None
